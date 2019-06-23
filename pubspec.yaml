@@ -14,11 +14,12 @@ description: This application helps you keep track of your monthly expenses.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  firebase_core: ^0.4.0
   intl: ^0.15.8
   datetime_picker_formfield: ^0.1.4
   date_utils: ^0.1.0
@@ -26,9 +27,12 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  rxdart: ^0.18.0
+  cloud_firestore: ^0.12.5
 
   font_awesome_flutter: ^8.2.0
   charts_flutter: ^0.6.0
+  table_calendar: ^1.2.3
 
 dev_dependencies:
   flutter_test:
