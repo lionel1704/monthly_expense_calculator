@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "171220924236",
+    "firebase_url": "https://monthly-expense-calculator.firebaseio.com",
+    "project_id": "monthly-expense-calculator",
+    "storage_bucket": "monthly-expense-calculator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171220924236:android:dbe6cbe50bdbd63a",
+        "android_client_info": {
+          "package_name": "com.bee.monthly_expense_calculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "171220924236-llp2612c3erovkakvn0naf3381fk2ajd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHu1JSYkJ2Dw_qKAw2X_yWWLg-NmZLMY0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "171220924236-llp2612c3erovkakvn0naf3381fk2ajd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
