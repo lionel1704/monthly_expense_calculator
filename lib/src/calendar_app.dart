@@ -4,6 +4,11 @@
 import 'package:date_utils/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:monthly_expense_calculator/screens/logging_expenses.dart';
+import 'package:monthly_expense_calculator/screens/total_expense.dart';
+import 'package:monthly_expense_calculator/charts/chart.dart';
+import 'package:monthly_expense_calculator/screens/login_screen.dart';
+
 
 // Example holidays
 final Map<DateTime, List> _holidays = {
@@ -14,16 +19,23 @@ final Map<DateTime, List> _holidays = {
   DateTime(2019, 4, 22): ['Easter Monday'],
 };
 
-class CalendarApp
- extends StatelessWidget {
+class CalendarApp extends StatelessWidget {
+
+  List<Widget> pages = [MyHomePage(title: 'Table Calendar Demo'), HomePage()];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Table Calendar Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Table Calendar Demo'),
+        title: 'Table Calendar Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home:
+        PageView.builder(
+          itemCount: pages.length,
+          itemBuilder: (BuildContext context, int index) => pages[index],
+        )
     );
   }
 }
@@ -50,21 +62,57 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     super.initState();
     _selectedDay = DateTime.now();
     _events = {
-      _selectedDay.subtract(Duration(days: 30)): ['Event A0', 'Event B0', 'Event C0'],
+      _selectedDay.subtract(Duration(days: 30)): [
+        'Event A0',
+        'Event B0',
+        'Event C0'
+      ],
       _selectedDay.subtract(Duration(days: 27)): ['Event A1'],
-      _selectedDay.subtract(Duration(days: 20)): ['Event A2', 'Event B2', 'Event C2', 'Event D2'],
+      _selectedDay.subtract(Duration(days: 20)): [
+        'Event A2',
+        'Event B2',
+        'Event C2',
+        'Event D2'
+      ],
       _selectedDay.subtract(Duration(days: 16)): ['Event A3', 'Event B3'],
-      _selectedDay.subtract(Duration(days: 10)): ['Event A4', 'Event B4', 'Event C4'],
-      _selectedDay.subtract(Duration(days: 4)): ['Event A5', 'Event B5', 'Event C5'],
+      _selectedDay.subtract(Duration(days: 10)): [
+        'Event A4',
+        'Event B4',
+        'Event C4'
+      ],
+      _selectedDay.subtract(Duration(days: 4)): [
+        'Event A5',
+        'Event B5',
+        'Event C5'
+      ],
       _selectedDay.subtract(Duration(days: 2)): ['Event A6', 'Event B6'],
       _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
-      _selectedDay.add(Duration(days: 1)): ['Event A8', 'Event B8', 'Event C8', 'Event D8'],
-      _selectedDay.add(Duration(days: 3)): Set.from(['Event A9', 'Event A9', 'Event B9']).toList(),
-      _selectedDay.add(Duration(days: 7)): ['Event A10', 'Event B10', 'Event C10'],
+      _selectedDay.add(Duration(days: 1)): [
+        'Event A8',
+        'Event B8',
+        'Event C8',
+        'Event D8'
+      ],
+      _selectedDay.add(Duration(days: 3)): Set.from(
+          ['Event A9', 'Event A9', 'Event B9']).toList(),
+      _selectedDay.add(Duration(days: 7)): [
+        'Event A10',
+        'Event B10',
+        'Event C10'
+      ],
       _selectedDay.add(Duration(days: 11)): ['Event A11', 'Event B11'],
-      _selectedDay.add(Duration(days: 17)): ['Event A12', 'Event B12', 'Event C12', 'Event D12'],
+      _selectedDay.add(Duration(days: 17)): [
+        'Event A12',
+        'Event B12',
+        'Event C12',
+        'Event D12'
+      ],
       _selectedDay.add(Duration(days: 22)): ['Event A13', 'Event B13'],
-      _selectedDay.add(Duration(days: 26)): ['Event A14', 'Event B14', 'Event C14'],
+      _selectedDay.add(Duration(days: 26)): [
+        'Event A14',
+        'Event B14',
+        'Event C14'
+      ],
     };
 
     _selectedEvents = _events[_selectedDay] ?? [];
@@ -86,20 +134,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     });
   }
 
-  void _onVisibleDaysChanged(DateTime first, DateTime last, CalendarFormat format) {
+  void _onVisibleDaysChanged(DateTime first, DateTime last,
+      CalendarFormat format) {
     setState(() {
       _visibleEvents = Map.fromEntries(
         _events.entries.where(
-          (entry) =>
-              entry.key.isAfter(first.subtract(const Duration(days: 1))) &&
+              (entry) =>
+          entry.key.isAfter(first.subtract(const Duration(days: 1))) &&
               entry.key.isBefore(last.add(const Duration(days: 1))),
         ),
       );
 
       _visibleHolidays = Map.fromEntries(
         _holidays.entries.where(
-          (entry) =>
-              entry.key.isAfter(first.subtract(const Duration(days: 1))) &&
+              (entry) =>
+          entry.key.isAfter(first.subtract(const Duration(days: 1))) &&
               entry.key.isBefore(last.add(const Duration(days: 1))),
         ),
       );
@@ -111,6 +160,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        leading: IconButton(icon: Icon(
+            Icons.arrow_back),
+          onPressed: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) {
+                  return WelcomeScreen();
+                }));
+          },
+        ),
       ),
       body: Column(
         mainAxisSize: MainAxisSize.max,
@@ -121,7 +179,38 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           // _buildTableCalendarWithBuilders(),
           const SizedBox(height: 8.0),
           Expanded(child: _buildEventList()),
+          Center(
+            child: Container(
+              padding: EdgeInsets.only(bottom: 20.0),
+              child: RaisedButton(
+                  color: Colors.deepPurple,
+                  elevation: 6.0,
+                  child: Text(
+                    'Calculate Total Expenses',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) {
+                      return TotalExpense();
+                    }));
+                  }),
+            ),
+          ),
         ],
+
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return LoggingExpense();
+          }));
+        },
+        child: Icon(Icons.add),
+        tooltip: 'Add a new expense',
       ),
     );
   }
@@ -147,7 +236,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         markersColor: Colors.brown[700],
       ),
       headerStyle: HeaderStyle(
-        formatButtonTextStyle: TextStyle().copyWith(color: Colors.white, fontSize: 15.0),
+        formatButtonTextStyle: TextStyle().copyWith(
+            color: Colors.white, fontSize: 15.0),
         formatButtonDecoration: BoxDecoration(
           color: Colors.deepOrange[400],
           borderRadius: BorderRadius.circular(16.0),
@@ -255,7 +345,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         shape: BoxShape.rectangle,
         color: Utils.isSameDay(date, _selectedDay)
             ? Colors.brown[500]
-            : Utils.isSameDay(date, DateTime.now()) ? Colors.brown[300] : Colors.blue[400],
+            : Utils.isSameDay(date, DateTime.now()) ? Colors.brown[300] : Colors
+            .blue[400],
       ),
       width: 16.0,
       height: 16.0,
@@ -282,18 +373,20 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   Widget _buildEventList() {
     return ListView(
       children: _selectedEvents
-          .map((event) => Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 0.8),
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                child: ListTile(
-                  title: Text(event.toString()),
-                  onTap: () => print('$event tapped!'),
-                ),
-              ))
+          .map((event) =>
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(width: 0.8),
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+            child: ListTile(
+              title: Text(event.toString()),
+              onTap: () => print('$event tapped!'),
+            ),
+          ))
           .toList(),
+
     );
   }
 }

@@ -9,7 +9,7 @@ class TotalExpense extends StatelessWidget {
         ),
         body: Padding(
           padding: EdgeInsets.only(top: 40.0),
-          child: Column(
+          child: ListView(
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(top: 40.0, left: 30.0),
@@ -20,7 +20,7 @@ class TotalExpense extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 10.0,
+                height: 20.0,
               ),
               Padding(
                   padding: EdgeInsets.only(
@@ -45,7 +45,7 @@ class TotalExpense extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 10.0,
+                height: 20.0,
               ),
               Padding(
                   padding: EdgeInsets.only(
