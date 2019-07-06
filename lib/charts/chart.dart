@@ -184,7 +184,10 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          'Expenses',style: TextStyle(fontSize: 24.0,fontWeight: FontWeight.bold),),
+                          'Expenses',
+                          style: TextStyle(
+                              fontSize: 24.0, fontWeight: FontWeight.bold),
+                        ),
                         Expanded(
                           child: charts.BarChart(
                             _seriesData,
@@ -206,21 +209,28 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          'Time spent on daily tasks',style: TextStyle(fontSize: 24.0,fontWeight: FontWeight.bold),),
-                        SizedBox(height: 10.0,),
+                          'Time spent on daily tasks',
+                          style: TextStyle(
+                              fontSize: 24.0, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
                         Expanded(
-                          child: charts.PieChart(
-                              _seriesPieData,
+                          child: charts.PieChart(_seriesPieData,
                               animate: true,
                               animationDuration: Duration(seconds: 5),
                               behaviors: [
                                 new charts.DatumLegend(
-                                  outsideJustification: charts.OutsideJustification.endDrawArea,
+                                  outsideJustification:
+                                      charts.OutsideJustification.endDrawArea,
                                   horizontalFirst: false,
                                   desiredMaxRows: 2,
-                                  cellPadding: new EdgeInsets.only(right: 4.0, bottom: 4.0),
+                                  cellPadding: new EdgeInsets.only(
+                                      right: 4.0, bottom: 4.0),
                                   entryTextStyle: charts.TextStyleSpec(
-                                      color: charts.MaterialPalette.purple.shadeDefault,
+                                      color: charts
+                                          .MaterialPalette.purple.shadeDefault,
                                       fontFamily: 'Georgia',
                                       fontSize: 11),
                                 )
@@ -229,7 +239,8 @@ class _HomePageState extends State<HomePage> {
                                   arcWidth: 100,
                                   arcRendererDecorators: [
                                     new charts.ArcLabelDecorator(
-                                        labelPosition: charts.ArcLabelPosition.inside)
+                                        labelPosition:
+                                            charts.ArcLabelPosition.inside)
                                   ])),
                         ),
                       ],
@@ -244,27 +255,34 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          'Sales for the first 5 years',style: TextStyle(fontSize: 24.0,fontWeight: FontWeight.bold),),
+                          'Sales for the first 5 years',
+                          style: TextStyle(
+                              fontSize: 24.0, fontWeight: FontWeight.bold),
+                        ),
                         Expanded(
-                          child: charts.LineChart(
-                              _seriesLineData,
+                          child: charts.LineChart(_seriesLineData,
                               defaultRenderer: new charts.LineRendererConfig(
                                   includeArea: true, stacked: true),
                               animate: true,
                               animationDuration: Duration(seconds: 5),
                               behaviors: [
                                 new charts.ChartTitle('Years',
-                                    behaviorPosition: charts.BehaviorPosition.bottom,
-                                    titleOutsideJustification:charts.OutsideJustification.middleDrawArea),
+                                    behaviorPosition:
+                                        charts.BehaviorPosition.bottom,
+                                    titleOutsideJustification: charts
+                                        .OutsideJustification.middleDrawArea),
                                 new charts.ChartTitle('Sales',
-                                    behaviorPosition: charts.BehaviorPosition.start,
-                                    titleOutsideJustification: charts.OutsideJustification.middleDrawArea),
-                                new charts.ChartTitle('Departments',
+                                    behaviorPosition:
+                                        charts.BehaviorPosition.start,
+                                    titleOutsideJustification: charts
+                                        .OutsideJustification.middleDrawArea),
+                                new charts.ChartTitle(
+                                  'Departments',
                                   behaviorPosition: charts.BehaviorPosition.end,
-                                  titleOutsideJustification:charts.OutsideJustification.middleDrawArea,
+                                  titleOutsideJustification: charts
+                                      .OutsideJustification.middleDrawArea,
                                 )
-                              ]
-                          ),
+                              ]),
                         ),
                       ],
                     ),
