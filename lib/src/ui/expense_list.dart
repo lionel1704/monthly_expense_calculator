@@ -29,10 +29,10 @@ class ExpenseList extends StatelessWidget {
     return ListView.builder(
       itemCount: snapshot.data.expenses.length,
       itemBuilder: (context, index) {
-        return ListTile (
-          title: Text(snapshot.data.expenses[index].description),
+        return ListTile(
+          title: Text(snapshot.data.expenses[index].category),
           subtitle: Text("Rs. ${snapshot.data.expenses[index].amount}"),
-          trailing: Text("${snapshot.data.expenses[index].category}"),
+          trailing: Text("${snapshot.data.expenses[index].date}"),
         );
       },
     );

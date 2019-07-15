@@ -13,19 +13,15 @@ void main() {
   runApp(MyApp());
 }
 
- class MyApp extends StatelessWidget{
-
-   @override
-   Widget build(BuildContext context) {
-     return MaterialApp(
-       title: 'Monthly Expense Tracker',
-       debugShowCheckedModeBanner: false,
-       theme: ThemeData(
-         primarySwatch: Colors.deepPurple
-       ),
-       home: Scaffold(
-         body: WelcomeScreen(),
-       )
-     );
-   }
- }
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Monthly Expense Tracker',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(primarySwatch: Colors.deepPurple),
+        home: Scaffold(
+          body: WelcomeScreen(),
+        ));
+  }
+}

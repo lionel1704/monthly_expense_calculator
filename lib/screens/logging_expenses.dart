@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import '../src/models/expenses_model.dart';
+import '../src/blocs/expenses_bloc.dart';
 import 'package:datetime_picker_formfield/time_picker_formfield.dart';
 import 'dart:async';
 
@@ -13,6 +15,7 @@ class LoggingExpense extends StatefulWidget {
 
 class LoggingExpenseState extends State<LoggingExpense> {
   var _formKey = GlobalKey<FormState>();
+  final amtController = TextEditingController();
 
   var _expenseType = [
     'Entertainment',
@@ -102,9 +105,9 @@ class LoggingExpenseState extends State<LoggingExpense> {
                         ),
                         Expanded(
                             child: Container(
-                          child:DateTimePickerFormField(
+                          child: DateTimePickerFormField(
                             inputType: InputType.date,
-                            format: DateFormat("MMMM d, yyyy (EEEE)"),
+                            format: DateFormat("dd-MM-yyyy"),
                             editable: false,
                             decoration: InputDecoration(
                                 prefixIcon: Icon(
@@ -144,11 +147,12 @@ class LoggingExpenseState extends State<LoggingExpense> {
                         Expanded(
                           child: Container(
                             child: TextFormField(
+                              controller: amtController,
                               validator: (String value) {
                                 if (value.isEmpty) {
                                   return 'Amount cannot be 0';
                                 }
-                                if(value.contains('-')){
+                                if (value.contains('-')) {
                                   return 'Amount cannot be negative';
                                 }
                               },
@@ -157,7 +161,7 @@ class LoggingExpenseState extends State<LoggingExpense> {
                                   labelText: 'Amount Spent',
                                   hintText: 'Enter amount in Rs.',
                                   errorStyle: TextStyle(
-                                      fontSize: 13.0,
+                                    fontSize: 13.0,
                                   ),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5.0),
@@ -185,7 +189,14 @@ class LoggingExpenseState extends State<LoggingExpense> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  if (_formKey.currentState.validate()) {}
+                                  if (_formKey.currentState.validate()) {
+                                    var expense = Expense.fromData(
+                                        _currentItemSelected,
+                                        new DateFormat("yyyyMMdd")
+                                            .format(date1),
+                                        int.parse(amtController.text));
+                                    bloc.addExpense(expense);
+                                  }
                                 }),
                           ),
                         ),
