@@ -8,9 +8,12 @@ class Repository {
   Future<ExpensesModel> fetchAllExpenses(String userName) =>
       expensesApiProvider.fetchAllExpenses(userName);
 
-  Future registerUser(String userName) =>
-      expensesApiProvider.registerUser(userName);
+  Future registerUser(String userId, String userName, String salary) =>
+      expensesApiProvider.registerUser(userId, userName, salary);
 
   Future addExpense(String userName, Expense expense) =>
       expensesApiProvider.addExpense(userName, expense);
+
+  Future updateExpense(String userName, Expense expense) =>
+      expensesApiProvider.updateExpense(userName, expense);
 }

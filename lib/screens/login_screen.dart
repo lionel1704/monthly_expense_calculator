@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:monthly_expense_calculator/src/calendar_app.dart';
 import '../src/blocs/expenses_bloc.dart';
+import '../main.dart';
 
 class WelcomeScreen extends StatefulWidget {
+  final UserDetails userDetails;
+
+  WelcomeScreen({this.userDetails});
+
   @override
   State<StatefulWidget> createState() {
     return WelcomeScreenState();
@@ -11,11 +16,14 @@ class WelcomeScreen extends StatefulWidget {
 
 class WelcomeScreenState extends State<WelcomeScreen> {
   var _formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController incomeController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    var scaffold = Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Monthly Expense Calculator'),
@@ -66,7 +74,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                     child: TextFormField(
                       controller: nameController,
                       validator: (String value) {
-                        if (value.isEmpty) {
+                        if (nameController.text.isEmpty) {
                           return 'Name field cannot be empty';
                         }
                       },
@@ -100,11 +108,12 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                     right: 20.0,
                   ),
                   child: TextFormField(
+                    controller: incomeController,
                     validator: (String value) {
-                      if (value.isEmpty) {
+                      if (incomeController.text.isEmpty) {
                         return 'Monthly income value cannot be empty';
                       }
-                      if (value.contains('-')) {
+                      if (incomeController.text.contains('-')) {
                         return 'Monthly income value cannot be negative';
                       }
                     },
@@ -135,7 +144,9 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                       ),
                     ),
                     onPressed: () {
-                      bloc.registerUser(nameController.text);
+                      print(widget.userDetails.userId);
+                      bloc.registerUser(widget.userDetails.userId,
+                          widget.userDetails.userName, incomeController.text);
                       setState(() {
                         if (_formKey.currentState.validate()) {
                           Navigator.push(context,
@@ -151,12 +162,33 @@ class WelcomeScreenState extends State<WelcomeScreen> {
         ),
       ),
     );
+    nameController.text = widget.userDetails.userName;
+    return scaffold;
+  }
+
+  Future<bool> _onBackPressed() {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text("Do you want to exit the app?"),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("No"),
+                  onPressed: () => Navigator.pop(context, false),
+                ),
+                FlatButton(
+                  child: Text("Yes"),
+                  onPressed: () => Navigator.pop(context, true),
+                )
+              ],
+            ));
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     nameController.dispose();
+    incomeController.dispose();
     super.dispose();
   }
 }

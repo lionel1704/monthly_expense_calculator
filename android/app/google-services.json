@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "171220924236-a8kjvpoih6h5a47669t47nb8pu2t4pt2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bee.monthly_expense_calculator",
+            "certificate_hash": "0d780e7db672be6d9dfafbf5e67bd8794c82f3c9"
+          }
+        },
+        {
           "client_id": "171220924236-llp2612c3erovkakvn0naf3381fk2ajd.apps.googleusercontent.com",
           "client_type": 3
         }

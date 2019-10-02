@@ -5,22 +5,26 @@ import '../models/expenses_model.dart';
 class ExpensesBloc {
   final _repository = Repository();
   final _expensesFetcher = PublishSubject<ExpensesModel>();
-  var _userName;
+  var _userId;
 
   Observable<ExpensesModel> get allExpenses => _expensesFetcher.stream;
 
   Future<Map<DateTime, List>> fetchAllExpenses() async {
-    var model = await _repository.fetchAllExpenses(_userName);
+    var model = await _repository.fetchAllExpenses(_userId);
     return model.expenseList();
   }
 
-  registerUser(String userName) async {
-    _userName = userName;
-    await _repository.registerUser(userName);
+  registerUser(String userId, String userName, String salary) async {
+    _userId = userId;
+    await _repository.registerUser(userId, userName, salary);
   }
 
   addExpense(Expense expense) async {
-    await _repository.addExpense(_userName, expense);
+    await _repository.addExpense(_userId, expense);
+  }
+
+  updateExpense(Expense expense) async {
+    await _repository.updateExpense(_userId, expense);
   }
 
   dispose() {

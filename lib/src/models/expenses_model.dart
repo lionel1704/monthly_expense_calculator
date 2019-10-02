@@ -6,16 +6,16 @@ class ExpensesModel {
 
   List<Expense> _expenses = [];
 
-  ExpensesModel.fromJson(Map<String, dynamic> parsedJson) {
-    print(parsedJson['expenses'].length);
-    _total_expenses = parsedJson['expenses'].length;
-    List<Expense> temp = new List();
-    for (int i = 0; i < parsedJson['expenses'].length; i++) {
-      Expense expense = Expense(parsedJson['expenses'][i]);
-      temp.add(expense);
-    }
-    _expenses = temp;
-  }
+  // ExpensesModel.fromJson(Map<String, dynamic> parsedJson) {
+  //   print(parsedJson['expenses'].length);
+  //   _total_expenses = parsedJson['expenses'].length;
+  //   List<Expense> temp = new List();
+  //   for (int i = 0; i < parsedJson['expenses'].length; i++) {
+  //     Expense expense = Expense(parsedJson['expenses'][i]);
+  //     temp.add(expense);
+  //   }
+  //   _expenses = temp;
+  // }
 
   ExpensesModel(List<Expense> expenses) {
     _expenses = expenses;
@@ -30,9 +30,11 @@ class ExpensesModel {
     _expenses.forEach((expense) => {
           date = DateTime.parse(expense._date),
           if (temp.containsKey(date))
-            {temp[date].add("Rs. ${expense._amount} - ${expense._category}")}
+            {temp[date].add(expense)}
           else
-            {temp[date] = ["Rs. ${expense._amount} - ${expense._category}"]}
+            {
+              temp[date] = [expense]
+            }
         });
     return temp;
   }
@@ -41,6 +43,7 @@ class ExpensesModel {
 }
 
 class Expense {
+  String _id;
   String _category;
   String _date;
   int _amount;
@@ -51,10 +54,18 @@ class Expense {
     _amount = amt;
   }
 
-  Expense(expense) {
+  Expense(expense, id) {
+    _id = id;
     _category = expense['category'];
     _date = expense['date'];
     _amount = expense['amount'];
+  }
+
+  Expense.newExpense(expense, id) {
+    _id = id;
+    _category = expense.category;
+    _date = expense.date;
+    _amount = expense.amount;
   }
 
   String get category => _category;
@@ -62,4 +73,10 @@ class Expense {
   String get date => _date;
 
   int get amount => _amount;
+
+  String get id => _id;
+
+  set id(String id) {
+    _id = id;
+  }
 }
