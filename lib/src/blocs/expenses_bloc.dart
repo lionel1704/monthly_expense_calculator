@@ -27,6 +27,14 @@ class ExpensesBloc {
     await _repository.updateExpense(_userId, expense);
   }
 
+  Future<Map<String, int>> fetchAllTotalExpenses() async {
+    return await _repository.fetchAllTotalExpenses(_userId);
+  }
+
+  Future<int> getTotalSalary() async {
+    return await _repository.getTotalSalary(_userId);
+  }
+
   dispose() {
     _expensesFetcher.close();
   }

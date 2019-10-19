@@ -16,4 +16,10 @@ class Repository {
 
   Future updateExpense(String userName, Expense expense) =>
       expensesApiProvider.updateExpense(userName, expense);
+
+  Future<Map<String, int>> fetchAllTotalExpenses(String userName) =>
+      expensesApiProvider.fetchAllTotalExpenses(userName);
+    
+  Future<int> getTotalSalary(String userName) =>
+      expensesApiProvider.getTotalSalary(userName);
 }

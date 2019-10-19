@@ -163,6 +163,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       locale: 'en_US',
       events: _visibleEvents,
       initialCalendarFormat: CalendarFormat.month,
+      availableCalendarFormats: {
+        CalendarFormat.month: 'Month'
+      },
       formatAnimation: FormatAnimation.slide,
       startingDayOfWeek: StartingDayOfWeek.monday,
       availableGestures: AvailableGestures.all,
